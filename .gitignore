@@ -1,0 +1,6 @@
+# Here add files the should ignore in repositories
+
+*.user
+*.filters
+*.vs
+*.vcxproj
