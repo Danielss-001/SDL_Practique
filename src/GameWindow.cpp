@@ -34,14 +34,14 @@ bool GameWindow::init() {
 }
 
 void GameWindow::clear() {
-	SDL_SetRenderDrawColor(renderer, 66, 199, 255, 0);
-	SDL_RenderClear(renderer);
+	SDL_SetRenderDrawColor(renderer, 66, 199, 255, 0);		// Here applicate color render, in this case to window
+	SDL_RenderClear(renderer);								// Clear window and restart rendering
 }
 
 void GameWindow::present() {
 	SDL_RenderPresent(renderer);
 }
 
-SDL_Renderer* GameWindow::getRenderer() const {
+ SDL_Renderer* GameWindow::getRenderer() const {
 	return renderer;
 }

@@ -16,5 +16,5 @@ public:
 	void Update(const std::vector<SDL_FRect>);
 	void Render(SDL_Renderer* renderer);
 
-	SDL_FRect getRect() const;
+	const SDL_FRect& getRect(SDL_Renderer* renderer) const;
 };
