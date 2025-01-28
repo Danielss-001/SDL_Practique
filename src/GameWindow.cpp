@@ -22,7 +22,7 @@ bool GameWindow::init() {
 		return false;
 	}
 
-	renderer = SDL_CreateRenderer(window,NULL); // Created render for all application
+	renderer = SDL_CreateRenderer(window,NULL);										  // Created render for all application
 
 	if (!renderer) {
 		std::cerr << "Error al crear el renderizado: " << SDL_GetError()<<std::endl;
@@ -31,6 +31,32 @@ bool GameWindow::init() {
 		return false;
 	}
 	return true;
+}
+
+bool GameWindow::HandleResize(Camera& camera) {										 // Here method control resize window, and resize control camera
+	
+	SDL_Event event;																// First. capturin event
+	bool resized = false;															// init the variable bool in false
+
+	while (SDL_PollEvent(&event)) {													// Second. lisening all event in game
+		if (event.window.type == SDL_EVENT_WINDOW_RESIZED) {						// Three. If the event is resize window 
+			
+			int newWidth = event.window.data1;										// Four. Take new width resize window in variable newWidth...
+			int newHeight = event.window.data2;										// ... Take new height resize window in variable newHeight
+
+			camera.CameraResize(newWidth,newHeight);								// Five. Call camera method for resize camera and pass new data 
+
+			width = newWidth;														// Six. Change the variables globals the window game...
+			height = newHeight;														// ... New data in window variables
+
+			resized = true;															// Change assignment the variable 'resized' in true
+		}
+		else {
+			SDL_PushEvent(&event);													// Seven. ..IMPORTANT.. We return to put in quee all events not lisening
+		}
+	}
+	return resized;																	// Return variable 'resized'
+	
 }
 
 void GameWindow::clear() {

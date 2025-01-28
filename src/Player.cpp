@@ -31,7 +31,6 @@ void Player::HandleInput() {
 				velocityX = 0;											  // Determinate velocity in zero | Stop motion
 			}
 		}
-		
 	}
 }
 
@@ -85,7 +84,7 @@ void Player::Update(const std::vector<SDL_FRect> solidTiles) {			  // Method upd
 		float playerTop = rect.y;
 		float playerBottom = rect.y + rect.h;
 
-		// Detecting vertical collision
+		// Detecting horizontal collision
 		if (playerRight > tileLeft && playerLeft < tileRight && playerTop < tileBottom && playerBottom > tileTop) {
 
 			if (velocityX > 0) {										// Move player right
@@ -99,7 +98,7 @@ void Player::Update(const std::vector<SDL_FRect> solidTiles) {			  // Method upd
 		}
 	}
 
-	if (rect.y < 2000) {													// If position player down 
+	if (rect.y < 2000) {												// If position player down 
 		velocityY += 1;													// Applicate gravity in velocity in Y axis 
 	}
 	else{																// Otherwise if player is grounded
@@ -114,7 +113,7 @@ void Player::Render(SDL_Renderer* renderer ) {							// Render player
 	SDL_RenderFillRect(renderer,&rect);									// Second used FillRect for add render and FRect | Show rect in window
 }
 
-const SDL_FRect& Player::getRect(SDL_Renderer* renderer) const {										// Getting rect player
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);						// First complement color renderer 
+const SDL_FRect& Player::getRect(SDL_Renderer* renderer) const {		// Getting rect player
+	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);					// First complement color renderer 
 	return rect;
 }

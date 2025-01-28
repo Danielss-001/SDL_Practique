@@ -29,29 +29,30 @@ int main() {
 
 	while (true) {
 				
+		window.HandleResize(camera);									   // Call resize camera with window
+
 		window.clear();													   // Clear window rewrite color and render
 
-		SDL_Renderer* render = window.getRenderer();					   // Render variable 
+		SDL_Renderer* render = window.getRenderer();					   // Render variable || implement initialized in window
 
 		camera.UpdateCamera(&player.getRect(render), LEVEL_WIDTH, LEVEL_HEIGHT);
 
-		/*level.RenderLevel(Levels::levelOne,render);*/
 		
 		std::vector<SDL_FRect> soliTiles = level.IsSolidCollisioner(Levels::levelOne,render);	  // Calculate collisions tiles
 
-		for (const auto& tile : soliTiles) {
-			camera.RenderObject(window.getRenderer(),tile);
+		for (const auto& tile : soliTiles) {							   // Here run through coordenates tiles vector 
+			camera.RenderObject(window.getRenderer(),tile);				   // Use camera render object method for render each tile in vector / only equal to one or solid tile
 		}
 
-		camera.RenderObject(render,player.getRect(render));
-
-		player.HandleInput();
-		player.Update(soliTiles);										  // In the update player implement collisions with world
-		/*player.Render(window.getRenderer()); */
+		camera.RenderObject(render,player.getRect(render));				  // Use render camera object method for render player
 		
 
-		window.present();
-		SDL_Delay(16);
+		player.HandleInput();											  // Call method control handle input player (events)
+		player.Update(soliTiles);										  // In the update player implement collisions with world
+		
+
+		window.present();												  
+		SDL_Delay(16);													  // Here method SDL for control change in loop, in milliseconds ()
 	}
 	return 0;
 }

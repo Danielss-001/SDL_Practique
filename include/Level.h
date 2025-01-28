@@ -3,7 +3,7 @@
 #include <vector>
 #include "../include/Player.h"
 
-#define TILE_SIZE 45.0f
+#define TILE_SIZE 45.0f		// Sise tile preprocesor
 
 
 class Level {
@@ -13,5 +13,5 @@ public:
 
 	void RenderLevel(std::vector<std::vector<int>> level, SDL_Renderer*);
 	std::vector<SDL_FRect> IsSolidCollisioner(std::vector<std::vector<int>> level, SDL_Renderer* renderer) ;
-	float GetTitleSize()const;
+	float GetTileSize()const;
 };

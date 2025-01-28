@@ -9,7 +9,7 @@ public:
 	
 	SDL_FRect TransformToCameraView(const SDL_FRect& worldRect) const;				// Control render object relative camera vision
 	void RenderObject(SDL_Renderer* renderer,SDL_FRect worldRect) const;			// Control all renderer  objects depending the to camera view || Major Performance
-	void UpdateCamera(const SDL_FRect* player, int levelWith, int levelHeight);
-	void SmoothCameraUpdate(const SDL_FRect* player, float lerpFactor);
+	void UpdateCamera(const SDL_FRect* player, int levelWith, int levelHeight);		// Update camera, where move by motion player center
+	void CameraResize(int newWith, int newHeight);									// Control camera size, if the resize window
 	
 };

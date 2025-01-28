@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL3/SDL.h>
 #include <iostream>
+#include "../include/Camera.h"
 
 class GameWindow {
 private:
@@ -18,6 +19,7 @@ public:
 
 	// Here init the window and renderer 
 	bool init();				
+	bool HandleResize(Camera& camera);
 	void clear();
 	void present();
 
