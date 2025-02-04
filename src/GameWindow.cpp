@@ -14,7 +14,7 @@ bool GameWindow::init() {
 		return false;
 	}
 	
-	window = SDL_CreateWindow("Mini Mario Bros", width, height, SDL_WINDOW_RESIZABLE); // Created window
+	window = SDL_CreateWindow("Mini Mario Bros", width, height, SDL_WINDOW_RESIZABLE);// Created window
 
 	if (!window) {
 		std::cerr << "Error en la ventana: " << SDL_GetError() << std::endl;
@@ -22,18 +22,18 @@ bool GameWindow::init() {
 		return false;
 	}
 
-	renderer = SDL_CreateRenderer(window,NULL);										  // Created render for all application
+	renderer = SDL_CreateRenderer(window,NULL);										// Created render for all application
 
-	if (!renderer) {
-		std::cerr << "Error al crear el renderizado: " << SDL_GetError()<<std::endl;
-		SDL_DestroyWindow(window);
-		SDL_Quit();
+	if (!renderer) {																// If fail renderer
+		std::cerr << "Error al crear el renderizado: " << SDL_GetError()<<std::endl;// Comment take error SDL type
+		SDL_DestroyWindow(window);													// Destroy window
+		SDL_Quit();																	// Finish program
 		return false;
 	}
 	return true;
 }
 
-bool GameWindow::HandleResize(Camera& camera) {										 // Here method control resize window, and resize control camera
+bool GameWindow::HandleResize(Camera& camera) {										// Here method control resize window, and resize control camera
 	
 	SDL_Event event;																// First. capturin event
 	bool resized = false;															// init the variable bool in false
@@ -60,14 +60,14 @@ bool GameWindow::HandleResize(Camera& camera) {										 // Here method control
 }
 
 void GameWindow::clear() {
-	SDL_SetRenderDrawColor(renderer, 66, 199, 255, 0);		// Here applicate color render, in this case to window
-	SDL_RenderClear(renderer);								// Clear window and restart rendering
+	SDL_SetRenderDrawColor(renderer, 66, 199, 255, 0);								// Here applicate color render, in this case to window
+	SDL_RenderClear(renderer);														// Clear window and restart rendering
 }
 
 void GameWindow::present() {
 	SDL_RenderPresent(renderer);
 }
 
- SDL_Renderer* GameWindow::getRenderer() const {
+ SDL_Renderer* GameWindow::getRenderer() const {									// Get renderer
 	return renderer;
 }

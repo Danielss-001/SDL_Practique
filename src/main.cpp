@@ -37,18 +37,21 @@ int main() {
 
 		camera.UpdateCamera(&player.getRect(render), LEVEL_WIDTH, LEVEL_HEIGHT);
 
-		
-		std::vector<SDL_FRect> soliTiles = level.IsSolidCollisioner(Levels::levelOne,render);	  // Calculate collisions tiles
+		SDL_FRect levelBox = level.ChangeLevelCoordenates(Levels::levelOne, render); // Call variable FRect that implement change level box coordenates
+		std::vector<SDL_FRect> soliTiles = level.IsSolidCollisioner(Levels::levelOne, render);// Calculate collisions tiles
 
 		for (const auto& tile : soliTiles) {							   // Here run through coordenates tiles vector 
 			camera.RenderObject(window.getRenderer(),tile);				   // Use camera render object method for render each tile in vector / only equal to one or solid tile
 		}
 
+		
+		camera.RenderObject(render,levelBox); // Render change level box using camera control render
+
 		camera.RenderObject(render,player.getRect(render));				  // Use render camera object method for render player
 		
 
 		player.HandleInput();											  // Call method control handle input player (events)
-		player.Update(soliTiles);										  // In the update player implement collisions with world
+		player.Update(soliTiles,levelBox);										  // In the update player implement collisions with world
 		
 
 		window.present();												  

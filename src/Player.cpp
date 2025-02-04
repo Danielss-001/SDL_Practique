@@ -34,7 +34,7 @@ void Player::HandleInput() {
 	}
 }
 
-void Player::Update(const std::vector<SDL_FRect> solidTiles) {			  // Method update player
+void Player::Update(const std::vector<SDL_FRect> solidTiles, const SDL_FRect levelBox){ // Method update player
 
 	// Vertical move
 	rect.y += velocityY;
@@ -92,11 +92,30 @@ void Player::Update(const std::vector<SDL_FRect> solidTiles) {			  // Method upd
 				velocityX = 0;											// Velocity in zero | Stop motion
 			}
 			else if (velocityX < 0) {									// Move player left
-				rect.x = tileRight;										// Put player blelow tile
+				rect.x = tileRight;										// Put player bellow tile
 				velocityX = 0;											// Velocity in zero | Stop motion
 			}
 		}
 	}
+
+	// Detect level change box and throw events in contact with these box 
+	// Changed level box dimensions
+	float boxLeft = levelBox.x;
+	float boxRight = levelBox.x + levelBox.w;
+	float boxTop = levelBox.y;
+	float boxBottom = levelBox.y + levelBox.h;
+	
+	// Player dimensions
+	float playerLeft = rect.x;
+	float playerRight = rect.x + rect.w;
+	float playerTop = rect.y;
+	float playerBottom = rect.y + rect.h;
+
+	// Detecting collision with change level box
+	if (playerRight > boxLeft && playerLeft < boxRight && playerTop < boxBottom && playerBottom > boxTop) {
+		std::cout << "Level Box!!" << std::endl;
+	}
+	//////////////////////////////////////////////////////////////////////////////////
 
 	if (rect.y < 2000) {												// If position player down 
 		velocityY += 1;													// Applicate gravity in velocity in Y axis 
@@ -106,6 +125,8 @@ void Player::Update(const std::vector<SDL_FRect> solidTiles) {			  // Method upd
 		isJumping = false;												// Is jumping determinate in false 
 	}
 	
+
+
 }
 
 void Player::Render(SDL_Renderer* renderer ) {							// Render player
