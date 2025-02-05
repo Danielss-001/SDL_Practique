@@ -1,7 +1,2 @@
-﻿  Camera.cpp
-  Level.cpp
-  GameWindow.cpp
-  main.cpp
-  Player.cpp
-  Generating Code...
+﻿  main.cpp
   JumpGame.vcxproj -> C:\project\portfolio\dev\JumpGame\debug\x64\Debug\JumpGame.exe

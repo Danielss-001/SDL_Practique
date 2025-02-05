@@ -12,15 +12,15 @@
 #define SCREEN_WIDTH_CAMERA 700
 #define SCREEN_HEIGHT_CAMERA 500 
 
-#define LEVEL_WIDTH 50 * 45													//The width Used the multiply N° rows in total || Is use for render camera
-#define LEVEL_HEIGHT 16 * 45												//The height Used the multiply N° columns in total || Is use for render camera
+#define LEVEL_WIDTH 50 * 45												   //The width Used the multiply N° rows in total || Is use for render camera
+#define LEVEL_HEIGHT 16 * 45											   //The height Used the multiply N° columns in total || Is use for render camera
 
 int main() {
 	
-	GameWindow window(SCREEN_WIDTH,SCREEN_HEIGHT);
-	Camera camera(0.0f,0.0f,SCREEN_WIDTH_CAMERA,SCREEN_HEIGHT_CAMERA);		// Initialice coordenates camera in zero
-	Player player(50.0f, 100.0f, PLAYER_WIDTH, PLAYER_HEIGHT);
-	Level level;
+	GameWindow window(SCREEN_WIDTH,SCREEN_HEIGHT);						   // Create instance window
+	Camera camera(0.0f,0.0f,SCREEN_WIDTH_CAMERA,SCREEN_HEIGHT_CAMERA);	   // Initialice coordenates camera in zero
+	Player player(50.0f, 100.0f, PLAYER_WIDTH, PLAYER_HEIGHT);			   // Create instance Player
+	Level level;														   // Call instance level
 
 
 	if(!window.init()) {												   // If not initialiced window 
@@ -37,7 +37,7 @@ int main() {
 
 		camera.UpdateCamera(&player.getRect(render), LEVEL_WIDTH, LEVEL_HEIGHT);
 
-		SDL_FRect levelBox = level.ChangeLevelCoordenates(Levels::levelOne, render); // Call variable FRect that implement change level box coordenates
+		
 		std::vector<SDL_FRect> soliTiles = level.IsSolidCollisioner(Levels::levelOne, render);// Calculate collisions tiles
 
 		for (const auto& tile : soliTiles) {							   // Here run through coordenates tiles vector 
@@ -45,17 +45,17 @@ int main() {
 		}
 
 		
-		camera.RenderObject(render,levelBox); // Render change level box using camera control render
+		camera.RenderObject(render,level.ChangeLevelCoordenates(Levels::levelOne,render));// Render change level box using camera control render
 
-		camera.RenderObject(render,player.getRect(render));				  // Use render camera object method for render player
+		camera.RenderObject(render,player.getRect(render));				   // Use render camera object method for render player
 		
 
-		player.HandleInput();											  // Call method control handle input player (events)
-		player.Update(soliTiles,levelBox);										  // In the update player implement collisions with world
+		player.HandleInput();											   // Call method control handle input player (events)
+		player.Update(soliTiles, level.ChangeLevelCoordenates(Levels::levelOne, render));// In the update player implement collisions with world and differents elements in the game
 		
 
 		window.present();												  
-		SDL_Delay(16);													  // Here method SDL for control change in loop, in milliseconds ()
+		SDL_Delay(16);													   // Here method SDL for control change in loop, in milliseconds ()
 	}
 	return 0;
 }
