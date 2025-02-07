@@ -1,5 +1,8 @@
 #pragma once
+#include <iostream>
 #include <SDL3/SDL.h>
+#include "../include/Player.h"
+#include "../include/Level.h"
 
 class Scene {
 public:

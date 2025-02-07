@@ -34,8 +34,10 @@ void Player::HandleInput() {
 	}
 }
 
-void Player::Update(const std::vector<SDL_FRect> solidTiles, const SDL_FRect levelBox){ // Method update player
-
+void Player::Update(const std::vector<SDL_FRect> solidTiles, const SDL_FRect levelBox){ 
+	/* 
+		This method use for update collisions and differents events
+	*/
 	// Vertical move
 	rect.y += velocityY;
 	for (const auto& tile : solidTiles) {
