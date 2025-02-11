@@ -1,9 +1,11 @@
 #include <SDL3/SDL.h> 
+#include <SDL3_ttf/SDL_ttf.h>											   // Text dependencies
 #include "../include/GameWindow.h"
 #include "../include/Player.h"
 #include "../include/Levels.h"
 #include "../include/Level.h"
 #include "../include/Camera.h"
+#include "../include/GameScene.h"
 
 #define SCREEN_WIDTH 700
 #define SCREEN_HEIGHT 500
@@ -22,36 +24,34 @@ int main() {
 	Player player(50.0f, 100.0f, PLAYER_WIDTH, PLAYER_HEIGHT);			   // Create instance Player
 	Level level;														   // Call instance level
 
+	GameScene game_scene(player,level,Levels::levelOne);
 
-	if(!window.init()) {												   // If not initialiced window 
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////  This initialization, must be in a global file ///////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	if(!window.init()) {												   // If not initialization window 
 		return -1;
 	}
-
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	while (true) {
 				
 		window.HandleResize(camera);									   // Call resize camera with window
 
 		window.clear();													   // Clear window rewrite color and render
 
-		SDL_Renderer* render = window.getRenderer();					   // Render variable || implement initialized in window
 
-		camera.UpdateCamera(&player.getRect(render), LEVEL_WIDTH, LEVEL_HEIGHT);
-
+		SDL_Renderer* render = window.getRenderer();						   // Render variable || implement initialized in window
 		
-		std::vector<SDL_FRect> soliTiles = level.IsSolidCollisioner(Levels::levelOne, render);// Calculate collisions tiles
-
-		for (const auto& tile : soliTiles) {							   // Here run through coordenates tiles vector 
-			camera.RenderObject(window.getRenderer(),tile);				   // Use camera render object method for render each tile in vector / only equal to one or solid tile
-		}
-
+		///////////////////////////////////// TEST SCENE /////////////////////////////////////////////////////////////////////////////////////////////
 		
-		camera.RenderObject(render,level.ChangeLevelCoordenates(Levels::levelOne,render));// Render change level box using camera control render
+		game_scene.HandleEvents();
+		game_scene.Render(render,camera);
+		game_scene.Update(render,camera,LEVEL_WIDTH,LEVEL_HEIGHT);
 
-		camera.RenderObject(render,player.getRect(render));				   // Use render camera object method for render player
-		
-
-		player.HandleInput();											   // Call method control handle input player (events)
-		player.Update(soliTiles, level.ChangeLevelCoordenates(Levels::levelOne, render));// In the update player implement collisions with world and differents elements in the game
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 
 		window.present();												  
