@@ -8,8 +8,10 @@ private:
 	SDL_FRect rect;
 	float velocityX, velocityY;
 	bool isJumping;
+	
 
 public:
+
 	// Initiliced constructor
 	Player(float x, float y, float width, float height);
 	void HandleInput();
@@ -19,6 +21,8 @@ public:
 
 	// This method controler render
 	void Render(SDL_Renderer* renderer);
+
+	bool ChangeLevelCheck(const SDL_FRect levelBox);
 
 	const SDL_FRect& getRect(SDL_Renderer* renderer) const;
 };

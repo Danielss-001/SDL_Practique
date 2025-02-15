@@ -6,6 +6,7 @@
 #include "../include/Level.h"
 #include "../include/Camera.h"
 #include "../include/GameScene.h"
+#include "../include/FactoryScene.h"
 
 #define SCREEN_WIDTH 700
 #define SCREEN_HEIGHT 500
@@ -24,7 +25,7 @@ int main() {
 	Player player(50.0f, 100.0f, PLAYER_WIDTH, PLAYER_HEIGHT);			   // Create instance Player
 	Level level;														   // Call instance level
 
-	GameScene game_scene(player,level,Levels::levelOne);
+	FactoryScene factory_scene(player,level);							   // Factory class	
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////  This initialization, must be in a global file ///////////////////////////////////////////////////////
@@ -42,19 +43,22 @@ int main() {
 
 		window.clear();													   // Clear window rewrite color and render
 
-
-		SDL_Renderer* render = window.getRenderer();						   // Render variable || implement initialized in window
+		SDL_Renderer* render = window.getRenderer();					   // Render variable || implement initialized in window
 		
 		///////////////////////////////////// TEST SCENE /////////////////////////////////////////////////////////////////////////////////////////////
 		
-		game_scene.HandleEvents();
-		game_scene.Render(render,camera);
-		game_scene.Update(render,camera,LEVEL_WIDTH,LEVEL_HEIGHT);
+		// All implementations are in factory update.
+		
+			//game_scene.HandleEvents();
+			//game_scene.Render(render,camera);
+			//game_scene.Update(render,camera,LEVEL_WIDTH,LEVEL_HEIGHT);
+		
+		factory_scene.Update(render,camera,LEVEL_WIDTH,LEVEL_HEIGHT);	   // Control of scenes with factory pattern
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 
-		window.present();												  
+		window.present();												   // Present and rendering window
 		SDL_Delay(16);													   // Here method SDL for control change in loop, in milliseconds ()
 	}
 	return 0;

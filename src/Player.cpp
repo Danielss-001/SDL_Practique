@@ -101,21 +101,25 @@ void Player::Update(const std::vector<SDL_FRect> solidTiles, const SDL_FRect lev
 
 	// Detect level change box and throw events in contact with these box 
 	// Changed level box dimensions
-	float boxLeft = levelBox.x;
-	float boxRight = levelBox.x + levelBox.w;
-	float boxTop = levelBox.y;
-	float boxBottom = levelBox.y + levelBox.h;
-	
-	// Player dimensions
-	float playerLeft = rect.x;
-	float playerRight = rect.x + rect.w;
-	float playerTop = rect.y;
-	float playerBottom = rect.y + rect.h;
+	//float boxLeft = levelBox.x;
+	//float boxRight = levelBox.x + levelBox.w;
+	//float boxTop = levelBox.y;
+	//float boxBottom = levelBox.y + levelBox.h;
+	//
+	//// Player dimensions
+	//float playerLeft = rect.x;
+	//float playerRight = rect.x + rect.w;
+	//float playerTop = rect.y;
+	//float playerBottom = rect.y + rect.h;
 
-	// Detecting collision with change level box
-	if (playerRight > boxLeft && playerLeft < boxRight && playerTop < boxBottom && playerBottom > boxTop) {
-		std::cout << "Level Box!!" << std::endl;
-	}
+	//// Detecting collision with change level box // level change 
+	//if (playerRight > boxLeft && playerLeft < boxRight && playerTop < boxBottom && playerBottom > boxTop) {
+	//	std::cout << "Level Box!!" << std::endl;
+
+	//}
+	// 
+
+	ChangeLevelCheck(levelBox);
 	//////////////////////////////////////////////////////////////////////////////////
 
 	if (rect.y < 2000) {												// If position player down 
@@ -128,6 +132,26 @@ void Player::Update(const std::vector<SDL_FRect> solidTiles, const SDL_FRect lev
 	
 
 
+}
+bool Player::ChangeLevelCheck(const SDL_FRect levelBox) {
+	float boxLeft = levelBox.x;
+	float boxRight = levelBox.x + levelBox.w;
+	float boxTop = levelBox.y;
+	float boxBottom = levelBox.y + levelBox.h;
+
+	// Player dimensions
+	float playerLeft = rect.x;
+	float playerRight = rect.x + rect.w;
+	float playerTop = rect.y;
+	float playerBottom = rect.y + rect.h;
+
+	// Detecting collision with change level box // level change 
+	if (playerRight > boxLeft && playerLeft < boxRight && playerTop < boxBottom && playerBottom > boxTop) {
+		/*std::cout << "True" << std::endl;*/
+		return true;
+	}/*
+	std::cout << "false" << std::endl;*/
+	return false;
 }
 
 void Player::Render(SDL_Renderer* renderer ) {							// Render player

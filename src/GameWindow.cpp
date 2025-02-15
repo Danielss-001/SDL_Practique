@@ -64,7 +64,7 @@ void GameWindow::clear() {
 	SDL_RenderClear(renderer);														// Clear window and restart rendering
 }
 
-void GameWindow::present() {
+void GameWindow::present() {														// Draw any object to be rendered using the renderer and rendering settings
 	SDL_RenderPresent(renderer);
 }
 
