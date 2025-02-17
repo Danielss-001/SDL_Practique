@@ -25,13 +25,13 @@ int main() {
 	Player player(50.0f, 100.0f, PLAYER_WIDTH, PLAYER_HEIGHT);			   // Create instance Player
 	Level level;														   // Call instance level
 
-	FactoryScene factory_scene(player,level);							   // Factory class	
+	FactoryScene factory_scene(player,level);					   // Factory class	
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////  This initialization, must be in a global file ///////////////////////////////////////////////////////
+	////////////////////////////////////////  This initialization, must be in a global file ///////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	if(!window.init()) {												   // If not initialization window 
+	if(!window.init()) {												   // If not initialization window | Called the initialice window
 		return -1;
 	}
 	
@@ -41,11 +41,9 @@ int main() {
 				
 		window.HandleResize(camera);									   // Call resize camera with window
 
-		window.clear();													   // Clear window rewrite color and render
-
 		SDL_Renderer* render = window.getRenderer();					   // Render variable || implement initialized in window
 		
-		///////////////////////////////////// TEST SCENE /////////////////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////// CALLED THE FACTORY CLASS ////////////////////////////////////////////////////////////////
 		
 		// All implementations are in factory update.
 		
@@ -53,7 +51,7 @@ int main() {
 			//game_scene.Render(render,camera);
 			//game_scene.Update(render,camera,LEVEL_WIDTH,LEVEL_HEIGHT);
 		
-		factory_scene.Update(render,camera,LEVEL_WIDTH,LEVEL_HEIGHT);	   // Control of scenes with factory pattern
+		factory_scene.Update(window, render,camera,LEVEL_WIDTH,LEVEL_HEIGHT);	   // Control of scenes with factory pattern
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		

@@ -1,14 +1,24 @@
 #include "../include/GameWindow.h"
 
-GameWindow::GameWindow(int width, int height) : window(nullptr), renderer(nullptr), width(width), height(height) {}
+GameWindow::GameWindow(int width, int height) :										// In this constructor, it sets to 0 each of the variables of the structe Color
+	window(nullptr), 
+	renderer(nullptr), 
+	width(width), 
+	height(height) {
 
-GameWindow::~GameWindow() {
+	background_color.r = 0;						
+	background_color.g = 0;
+	background_color.b = 0;
+	background_color.a = 0;
+}
+
+GameWindow::~GameWindow() {															// Delete everything: The render and the window. and don't forget to exit the game.
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }
 
-bool GameWindow::init() {
+bool GameWindow::init() {															// Init the window and render
 	if (SDL_Init(SDL_INIT_VIDEO) != 1) {
 		std::cerr << "El error es: "<< SDL_GetError()<<std::endl;
 		return false;
@@ -31,6 +41,21 @@ bool GameWindow::init() {
 		return false;
 	}
 	return true;
+}
+
+void GameWindow::SetBackgroundColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {			// Sets the background color with new values | using the Uint8 equal to 8 bits
+	background_color.r = r;
+	background_color.g = g;
+	background_color.b = b;
+	background_color.a = a;
+
+	SDL_SetRenderDrawColor(renderer,r,g,b,a);										// Here applicate color render, in this case to window
+
+}
+
+Color GameWindow::GetBackgroundColor() {											// This method get background color in: r, g, b, a							
+
+	return background_color;														// Return struct with color changes
 }
 
 bool GameWindow::HandleResize(Camera& camera) {										// Here method control resize window, and resize control camera
@@ -60,7 +85,7 @@ bool GameWindow::HandleResize(Camera& camera) {										// Here method control 
 }
 
 void GameWindow::clear() {
-	SDL_SetRenderDrawColor(renderer, 66, 199, 255, 0);								// Here applicate color render, in this case to window
+	
 	SDL_RenderClear(renderer);														// Clear window and restart rendering
 }
 

@@ -5,11 +5,11 @@
 
 class Player {
 private:
+	
 	SDL_FRect rect;
 	float velocityX, velocityY;
 	bool isJumping;
 	
-
 public:
 
 	// Initiliced constructor
@@ -22,7 +22,12 @@ public:
 	// This method controler render
 	void Render(SDL_Renderer* renderer);
 
+	// Collision with the level change box
 	bool ChangeLevelCheck(const SDL_FRect levelBox);
 
+	// Verify if the player is dead or if the player has fallen down 
+	bool PlayerIsDead();
+
+	// Get Player's primitive
 	const SDL_FRect& getRect(SDL_Renderer* renderer) const;
 };

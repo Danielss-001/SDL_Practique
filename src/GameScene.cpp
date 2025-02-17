@@ -24,6 +24,14 @@ void GameScene::Update(SDL_Renderer* renderer, Camera& camera,
 		factory_scene.SetLevelNumber(factory_scene.GetLevelNumber()+1);				// Change the level using the level_number, set in it
 		return;																		// Reset the whole loop, to benefit th e game_scene
 	}
+	if (player.PlayerIsDead()) {
+		
+		std::cout << "Player is dead!" << " New level: \n" << 
+			factory_scene.GetLevelNumber() << std::endl;
+
+		factory_scene.SetLevelNumber(factory_scene.GetLevelNumber()-1);
+		return;
+	}
 
 	camera.UpdateCamera(&player.getRect(renderer), widtCamera, heightCamera);		// In this method, the camera is updated every time the player moves
 }

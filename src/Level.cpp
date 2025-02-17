@@ -1,7 +1,7 @@
 #include "../include/Level.h"
 
 
-void Level::RenderLevel(std::vector<std::vector<int>> level, SDL_Renderer* renderer) {									// ***IMPORTANT***The render function must camera view
+void Level::RenderLevel(std::vector<std::vector<int>> level, SDL_Renderer* renderer) {// ***IMPORTANT***The render function must camera view
 	// Method no necessary: Because delegates control to camera
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	levelMap = level;											    // copy matriz 2D in the variable for change levels
@@ -22,6 +22,8 @@ void Level::RenderLevel(std::vector<std::vector<int>> level, SDL_Renderer* rende
 		}
 	}
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 // Method handle control coordenate level change rect
 SDL_FRect Level::ChangeLevelCoordenates(std::vector<std::vector<int>> level, SDL_Renderer* renderer) {
@@ -49,11 +51,16 @@ SDL_FRect Level::ChangeLevelCoordenates(std::vector<std::vector<int>> level, SDL
 }
 
 // Colisioner coordenates for use with player update detected collisions | Manager collisions in player update
-std::vector<SDL_FRect> Level::IsSolidCollisioner(std::vector<std::vector<int>> level, SDL_Renderer* renderer)  { // Determinate collisioner box | return vector the all solid tiles coordenates
+std::vector<SDL_FRect> Level::IsSolidCollisioner(std::vector<std::vector<int>> level, 
+	
+	SDL_Renderer* renderer)  {										// Determinate collisioner box | return vector the all solid tiles coordenates
 	
 	levelMap = level;											    // copy 2D matriz in the variable for change levels
 
-	SDL_SetRenderDrawColor(renderer, 1, 75, 0, 0);                  // Change color the render tile, using renderer and color in RGB
+	SDL_SetRenderDrawColor(renderer, tile_color.r,					// Change color the render tile, using renderer and color in RGB | 1, 75, 0, 0
+		tile_color.g, 
+		tile_color.b, 
+		tile_color.a);                  
 
 	std::vector<SDL_FRect> solidTiles;
 
@@ -74,6 +81,13 @@ std::vector<SDL_FRect> Level::IsSolidCollisioner(std::vector<std::vector<int>> l
 	return solidTiles;												// Return vector all tiles solid in coordenates 
 }
 
-float Level::GetTileSize() const {
+void Level::SetTileColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {		// Here is implemented to change the color of the tiles in the new color values
+	tile_color.r = r;
+	tile_color.g = g;
+	tile_color.b = b;
+	tile_color.a = a;
+}
+
+float Level::GetTileSize() const {									// Return tile size
 	return TILE_SIZE;
 }

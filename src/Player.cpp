@@ -133,7 +133,9 @@ void Player::Update(const std::vector<SDL_FRect> solidTiles, const SDL_FRect lev
 
 
 }
-bool Player::ChangeLevelCheck(const SDL_FRect levelBox) {
+bool Player::ChangeLevelCheck(const SDL_FRect levelBox) {				// This method checks for collisions between the level box and the player
+	
+	// Level box dimensions
 	float boxLeft = levelBox.x;
 	float boxRight = levelBox.x + levelBox.w;
 	float boxTop = levelBox.y;
@@ -152,6 +154,13 @@ bool Player::ChangeLevelCheck(const SDL_FRect levelBox) {
 	}/*
 	std::cout << "false" << std::endl;*/
 	return false;
+}
+
+bool Player::PlayerIsDead() {											// This method checks if the player dead
+	if (rect.y > 700) {													// If the player has fallen down 
+		return true;
+	}
+	return false;														// Return bool for use in Update game scene method
 }
 
 void Player::Render(SDL_Renderer* renderer ) {							// Render player
