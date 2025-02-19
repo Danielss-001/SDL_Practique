@@ -5,5 +5,6 @@
   GameWindow.cpp
   main.cpp
   Player.cpp
+  StartScene.cpp
   Generating Code...
   JumpGame.vcxproj -> C:\project\portfolio\dev\JumpGame\debug\x64\Debug\JumpGame.exe

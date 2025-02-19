@@ -7,16 +7,8 @@
 #include "../include/Camera.h"
 #include "../include/GameScene.h"
 #include "../include/FactoryScene.h"
+#include "../include/config.h"
 
-#define SCREEN_WIDTH 700
-#define SCREEN_HEIGHT 500
-#define PLAYER_WIDTH 20.0f
-#define PLAYER_HEIGHT 20.0f
-#define SCREEN_WIDTH_CAMERA 700
-#define SCREEN_HEIGHT_CAMERA 500 
-
-#define LEVEL_WIDTH 50 * 45												   //The width Used the multiply N° rows in total || Is use for render camera
-#define LEVEL_HEIGHT 16 * 45											   //The height Used the multiply N° columns in total || Is use for render camera
 
 int main() {
 	
@@ -25,7 +17,7 @@ int main() {
 	Player player(50.0f, 100.0f, PLAYER_WIDTH, PLAYER_HEIGHT);			   // Create instance Player
 	Level level;														   // Call instance level
 
-	FactoryScene factory_scene(player,level);					   // Factory class	
+	FactoryScene factory_scene(player,level);							   // Factory class	
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////  This initialization, must be in a global file ///////////////////////////////////////////////////////////
@@ -51,7 +43,7 @@ int main() {
 			//game_scene.Render(render,camera);
 			//game_scene.Update(render,camera,LEVEL_WIDTH,LEVEL_HEIGHT);
 		
-		factory_scene.Update(window, render,camera,LEVEL_WIDTH,LEVEL_HEIGHT);	   // Control of scenes with factory pattern
+		factory_scene.Update(window, render,camera,LEVEL_WIDTH,LEVEL_HEIGHT); // Control of scenes with factory pattern
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		

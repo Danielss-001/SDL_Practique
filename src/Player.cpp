@@ -3,33 +3,24 @@
 // Here constructor player
 Player::Player(float x, float y, float width, float height) : rect({x,y,width,height}), velocityX(0.0f), velocityY(0.0f), isJumping(false) {}
 
-void Player::HandleInput() {
+void Player::HandleInput(const SDL_Event& event) {					      // We leave the control of the main event loop in the game scene settings
 
-	SDL_Event e;														  // Implement SDLEvent for capturing anything event
-
-	while (SDL_PollEvent(&e) != 0 ) {									  // Its true if capturing anything event
-		if (e.type == SDL_EVENT_QUIT) {									  // If event-type is quit application
-			SDL_Quit();													  // Stop SDL game
-			exit(0);													  // Close window
+	if (event.type == SDL_EVENT_KEY_DOWN) {                               // If pressed key in keyboard
+		if (event.key.key == SDLK_LEFT) {								  // Pressed left key
+			velocityX = -5;												  // Motion at left | less velocity in X axis
 		}
-
-		if (e.type == SDL_EVENT_KEY_DOWN) {                               // If pressed key in keyboard
-			if (e.key.key == SDLK_LEFT) {								  // Pressed left key
-				velocityX = -5;											  // Motion at left | less velocity in X axis
-			}
-			if (e.key.key == SDLK_RIGHT) {								  // Pressed right key
-				velocityX = 5;											  // Motion at right | addition velocity in X axis
-			}
-			if (e.key.key == SDLK_SPACE && !isJumping ) {				  // Pressed space key and isjumping is false
-				velocityY = -15;										  // Motion at up | less velocity in Y axis
-				isJumping = true;										  // Variable isJumping now is true
-			}
+		if (event.key.key == SDLK_RIGHT) {								  // Pressed right key
+			velocityX = 5;											      // Motion at right | addition velocity in X axis
 		}
+		if (event.key.key == SDLK_SPACE && !isJumping) {				  // Pressed space key and isjumping is false
+			velocityY = -15;										      // Motion at up | less velocity in Y axis
+			isJumping = true;										      // Variable isJumping now is true
+		}
+	}
 
-		if (e.type == SDL_EVENT_KEY_UP) {								  // If release key in keyword
-			if (e.key.key == SDLK_LEFT || e.key.key == SDLK_RIGHT) {	  // If release left and right...
-				velocityX = 0;											  // Determinate velocity in zero | Stop motion
-			}
+	if (event.type == SDL_EVENT_KEY_UP) {								  // If release key in keyword
+		if (event.key.key == SDLK_LEFT || event.key.key == SDLK_RIGHT) {  // If release left and right...
+			velocityX = 0;											      // Determinate velocity in zero | Stop motion
 		}
 	}
 }
@@ -99,28 +90,9 @@ void Player::Update(const std::vector<SDL_FRect> solidTiles, const SDL_FRect lev
 		}
 	}
 
-	// Detect level change box and throw events in contact with these box 
-	// Changed level box dimensions
-	//float boxLeft = levelBox.x;
-	//float boxRight = levelBox.x + levelBox.w;
-	//float boxTop = levelBox.y;
-	//float boxBottom = levelBox.y + levelBox.h;
-	//
-	//// Player dimensions
-	//float playerLeft = rect.x;
-	//float playerRight = rect.x + rect.w;
-	//float playerTop = rect.y;
-	//float playerBottom = rect.y + rect.h;
+	ChangeLevelCheck(levelBox);											// Detect level change box and throw events in contact with these box 
 
-	//// Detecting collision with change level box // level change 
-	//if (playerRight > boxLeft && playerLeft < boxRight && playerTop < boxBottom && playerBottom > boxTop) {
-	//	std::cout << "Level Box!!" << std::endl;
-
-	//}
-	// 
-
-	ChangeLevelCheck(levelBox);
-	//////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	if (rect.y < 2000) {												// If position player down 
 		velocityY += 1;													// Applicate gravity in velocity in Y axis 
@@ -149,10 +121,10 @@ bool Player::ChangeLevelCheck(const SDL_FRect levelBox) {				// This method chec
 
 	// Detecting collision with change level box // level change 
 	if (playerRight > boxLeft && playerLeft < boxRight && playerTop < boxBottom && playerBottom > boxTop) {
-		/*std::cout << "True" << std::endl;*/
+
 		return true;
-	}/*
-	std::cout << "false" << std::endl;*/
+	}
+
 	return false;
 }
 

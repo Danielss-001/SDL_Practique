@@ -6,13 +6,14 @@
 #include <memory>
 
 class GameScene;							    // Forward declaration: GameScene statement for statements in this code | The "GameScene.h" in "FactoryScene.cpp"
+class StartScene;								// Forward declaration: StartScene statement for statements in this code | The "StartScene.h" in "FactoryScene.cpp"
 											    
 class FactoryScene {						    
 											    
 private:									    
 	Player					   player;		    
 	Level					   level;
-	std::unique_ptr<GameScene> game_scene;	    // Use of unique_ptr to control GameScene type instances
+	std::unique_ptr<IScene>    game_scene;	    // Use of unique_ptr to control GameScene type instances
 	int						   level_number;    // With numerical level for switching between levels	
 
 public:

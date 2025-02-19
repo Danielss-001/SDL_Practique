@@ -1,13 +1,18 @@
 #include "../include/FactoryScene.h"
 #include "../include/GameScene.h"												// Include here "GameScene.h" to avoid problems related to the cycle of declarations between two classes
+#include "../include/StartScene.h"
 
 FactoryScene::FactoryScene(Player& player, Level& level) :						// Constructor class
 	player(player),
 	level(level),
-	level_number(1)
+	level_number(0)
 {}
 
-void FactoryScene::Update(GameWindow& window, SDL_Renderer* render,  Camera& camera, int width, int height) { // In this method the factory update is implemented
+void FactoryScene::Update(GameWindow& window, 
+	SDL_Renderer* render,  
+	Camera& camera, 
+	int width, 
+	int height) {																// In this method the factory update is implemented
 
 	if (level_number > 3) {														// Here it is checked that the level number does not exceed 3
 		level_number = 1;														// Assing 1 in the level number
@@ -16,9 +21,11 @@ void FactoryScene::Update(GameWindow& window, SDL_Renderer* render,  Camera& cam
 	if (!game_scene) {															// If you do not implement game_scene, create new scene		
 
 		switch (level_number) {													// Change level_number 
+
 		case 0:																	// introduction and the title the game scene
 
-			// Scene init
+			game_scene = std::make_unique<StartScene>(*this);					// Create the start scene 
+
 			break;
 
 		case 1:																	// Chage level one
@@ -30,6 +37,7 @@ void FactoryScene::Update(GameWindow& window, SDL_Renderer* render,  Camera& cam
 			game_scene = std::make_unique<GameScene>(player,					// Create new scene with level One rendering. PDT: don't forget to create an abstract level class
 				level,															// ... for different change in physics and atmosphere, using interfaces :)
 				Levels::levelOne, 
+				camera, width, height,
 				*this);
 
 			break;
@@ -42,6 +50,7 @@ void FactoryScene::Update(GameWindow& window, SDL_Renderer* render,  Camera& cam
 			game_scene = std::make_unique<GameScene>(player,					// Change new scene with level Two rendering settings in level.
 				level, 
 				Levels::levelTwo, 
+				camera, width, height,
 				*this);
 
 			break;
@@ -54,6 +63,7 @@ void FactoryScene::Update(GameWindow& window, SDL_Renderer* render,  Camera& cam
 			game_scene = std::make_unique<GameScene>(player,					// Change new scene with level Two rendering settings in level.
 				level,
 				Levels::levelThree,
+				camera, width, height,
 				*this);
 			break;
 		default:
@@ -69,8 +79,8 @@ void FactoryScene::Update(GameWindow& window, SDL_Renderer* render,  Camera& cam
 	window.clear();																// Clear window rewrite color and render
 
 	game_scene->HandleEvents();													// Here, it calls the game scene event handler for use in the main loop
-	game_scene->Render(render, camera);											// The scene rendering handler is called here
-	game_scene->Update(render, camera, width, height);							// Method for called update scene
+	game_scene->Render(render);													// The scene rendering handler is called here
+	game_scene->Update(render);													// Method for called update scene
 
 }
 
