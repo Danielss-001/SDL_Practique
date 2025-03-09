@@ -7,7 +7,8 @@ GameScene::GameScene(Player& player,
 	Camera& camera, 
 	int width_camera, 
 	int height_camera, 
-	FactoryScene& factory_scene) :												   // Scene Constructor
+	FactoryScene& factory_scene,
+	GameWindow& window):												   // Scene Constructor
 
 	player(player),
 	level(level),
@@ -15,8 +16,11 @@ GameScene::GameScene(Player& player,
 	camera(camera),
 	width_camera(width_camera),
 	height_camera(height_camera),
-	factory_scene(factory_scene)
-{}
+	factory_scene(factory_scene),
+	window(window)
+{
+	pause_rect = { 0.0f, 0.0f, SCREEN_WIDTH , SCREEN_HEIGHT };				// Create FRect for the pause screen 
+}
 
 void GameScene::HandleEvents() {													// Scene event control
 
@@ -106,12 +110,13 @@ void GameScene::Render(SDL_Renderer*renderer) {										// Player, Objects and 
 SDL_FRect GameScene::RenderPauseScreen(SDL_Renderer* render) {						// Here, we implement the rendering settings of the game pause 
 	
 	SDL_SetRenderDrawColor(render,0,0,0,150);										// Set pause screen color
-	
-	SDL_FRect pauseRect = { 0.0f, 0.0f, SCREEN_WIDTH , SCREEN_HEIGHT };				// Create FRect for the pause screen 
-	
-	SDL_RenderFillRect(render,&pauseRect);											// We render without relying on camera rendering
 
-	return pauseRect;																// Return the rect of the screen
+	pause_rect.w = static_cast<float>(window.NewSizeWindow()[0]);
+	pause_rect.h = static_cast<float>(window.NewSizeWindow()[1]);
+	
+	SDL_RenderFillRect(render,&pause_rect);											// We render without relying on camera rendering
+
+	return pause_rect;																// Return the rect of the screen
 }
 
 bool const GameScene::IsPaused() {													// We get the pause variable

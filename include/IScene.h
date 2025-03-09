@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <SDL3/SDL.h>
+#include "../include/GameWindow.h"
 #include "../include/Player.h"
 #include "../include/Level.h"
 #include "../include/Camera.h"

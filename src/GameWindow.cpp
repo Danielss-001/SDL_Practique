@@ -1,10 +1,12 @@
 #include "../include/GameWindow.h"
+#include "../include/StartScene.h"
 
 GameWindow::GameWindow(int width, int height) :										// In this constructor, it sets to 0 each of the variables of the structe Color
 	window(nullptr), 
 	renderer(nullptr), 
 	width(width), 
 	height(height) {
+
 
 	background_color.r = 0;						
 	background_color.g = 0;
@@ -24,7 +26,7 @@ bool GameWindow::init() {															// Init the window and render
 		return false;
 	}
 	
-	window = SDL_CreateWindow("Mini Mario Bros", width, height, SDL_WINDOW_RESIZABLE);// Created window
+	window = SDL_CreateWindow("Jump Game", width, height, SDL_WINDOW_RESIZABLE);    // Created window
 
 	if (!window) {
 		std::cerr << "Error en la ventana: " << SDL_GetError() << std::endl;
@@ -63,6 +65,7 @@ bool GameWindow::HandleResize(Camera& camera) {										// Here method control 
 	SDL_Event event;																// First. capturin event
 	bool resized = false;															// init the variable bool in false
 
+	
 	while (SDL_PollEvent(&event)) {													// Second. lisening all event in game
 		if (event.window.type == SDL_EVENT_WINDOW_RESIZED) {						// Three. If the event is resize window 
 			
@@ -75,6 +78,8 @@ bool GameWindow::HandleResize(Camera& camera) {										// Here method control 
 			height = newHeight;														// ... New data in window variables
 
 			resized = true;															// Change assignment the variable 'resized' in true
+
+			SDL_PushEvent(&event);													// Seven. ..IMPORTANT.. We return to put in quee all events not lisening
 		}
 		else {
 			SDL_PushEvent(&event);													// Seven. ..IMPORTANT.. We return to put in quee all events not lisening
@@ -96,3 +101,7 @@ void GameWindow::present() {														// Draw any object to be rendered usin
  SDL_Renderer* GameWindow::getRenderer() const {									// Get renderer
 	return renderer;
 }
+
+ std::array<int, 2> GameWindow::NewSizeWindow() const{
+	 return { width,height };
+ }

@@ -1,5 +1,4 @@
 #include <SDL3/SDL.h> 
-#include <SDL3_ttf/SDL_ttf.h>											   // Text dependencies
 #include "../include/GameWindow.h"
 #include "../include/Player.h"
 #include "../include/Levels.h"
@@ -10,12 +9,15 @@
 #include "../include/config.h"
 
 
+
 int main() {
 	
 	GameWindow window(SCREEN_WIDTH,SCREEN_HEIGHT);						   // Create instance window
 	Camera camera(0.0f,0.0f,SCREEN_WIDTH_CAMERA,SCREEN_HEIGHT_CAMERA);	   // Initialice coordenates camera in zero
 	Player player(50.0f, 100.0f, PLAYER_WIDTH, PLAYER_HEIGHT);			   // Create instance Player
 	Level level;														   // Call instance level
+
+	
 
 	FactoryScene factory_scene(player,level);							   // Factory class	
 
@@ -26,6 +28,7 @@ int main() {
 	if(!window.init()) {												   // If not initialization window | Called the initialice window
 		return -1;
 	}
+	
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

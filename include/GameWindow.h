@@ -1,6 +1,8 @@
 #pragma once
 #include <SDL3/SDL.h>
 #include <iostream>
+#include <array>
+#include "../include/config.h"
 #include "../include/Camera.h"
 
 struct Color {
@@ -35,11 +37,15 @@ public:
 	// This method resizes window and the camera
 	bool HandleResize(Camera& camera);
 
+	// This method accesses the new width and height values to be used for the paused screen
+	std::array<int, 2> NewSizeWindow() const;
+
 	// Clear renderer
 	void clear();
 
 	// Present render
 	void present();
+
 
 	SDL_Renderer* getRenderer() const;
 };

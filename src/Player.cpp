@@ -120,7 +120,10 @@ bool Player::ChangeLevelCheck(const SDL_FRect levelBox) {				// This method chec
 	float playerBottom = rect.y + rect.h;
 
 	// Detecting collision with change level box // level change 
-	if (playerRight > boxLeft && playerLeft < boxRight && playerTop < boxBottom && playerBottom > boxTop) {
+	if (playerRight > boxLeft && 
+		playerLeft < boxRight && 
+		playerTop < boxBottom && 
+		playerBottom > boxTop) {
 
 		return true;
 	}

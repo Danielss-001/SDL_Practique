@@ -2,6 +2,7 @@
 #include "../include/IScene.h"
 #include "../include/config.h"
 
+
 class FactoryScene;										// Forward statement for the size used in memory for FactoryScene here | The include "FactoryScene.h" in "GameScene.cpp"
 
 class GameScene : public IScene {
@@ -11,6 +12,8 @@ private:
 	Level							level;
 	Camera&							camera;
 	FactoryScene&					factory_scene;						
+	SDL_FRect						pause_rect;
+	GameWindow&						window;
 	std::vector<std::vector<int>>	levels;
 	bool							is_paused = false;
 	int								width_camera;
@@ -18,7 +21,7 @@ private:
 
 public:
 	
-	GameScene(Player& player, Level& level,std::vector<std::vector<int>>& levels, Camera&, int, int,FactoryScene&);	// Factory call to modify in GameScene
+	GameScene(Player& player, Level& level,std::vector<std::vector<int>>& levels, Camera&, int, int,FactoryScene&, GameWindow& window);	// Factory call to modify in GameScene
 
 	// Here,we put player's and paused event control
 	void HandleEvents()override;

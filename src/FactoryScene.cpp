@@ -24,7 +24,7 @@ void FactoryScene::Update(GameWindow& window,
 
 		case 0:																	// introduction and the title the game scene
 
-			game_scene = std::make_unique<StartScene>(*this);					// Create the start scene 
+			game_scene = std::make_unique<StartScene>(camera,*this);	        // Create the start scene 
 
 			break;
 
@@ -38,7 +38,8 @@ void FactoryScene::Update(GameWindow& window,
 				level,															// ... for different change in physics and atmosphere, using interfaces :)
 				Levels::levelOne, 
 				camera, width, height,
-				*this);
+				*this,
+				window);
 
 			break;
 		case 2:																	// Change level two
@@ -51,7 +52,8 @@ void FactoryScene::Update(GameWindow& window,
 				level, 
 				Levels::levelTwo, 
 				camera, width, height,
-				*this);
+				*this,
+				window);
 
 			break;
 		case 3:
@@ -64,7 +66,8 @@ void FactoryScene::Update(GameWindow& window,
 				level,
 				Levels::levelThree,
 				camera, width, height,
-				*this);
+				*this,
+				window);
 			break;
 		default:
 			return;
