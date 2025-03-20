@@ -27,11 +27,35 @@ void StartScene::HandleEvents() {														// We implement the scene start e
 
 
 		if (!is_game_started && event.type == SDL_EVENT_KEY_DOWN) {						// Check if the game does not start and you predd any key
+			
+			if (event.key.key == SDLK_DOWN) {
+				
+				index_selected = (index_selected + 1) % menu_size;						// This line, calculates the menu option. the menu_size module is used which keeps the loop closed on the menu size.
+				std::cout << index_selected << std::endl;
+			}
+
+			if (event.key.key == SDLK_UP) {
+				
+				index_selected = (index_selected - 1 + menu_size) % menu_size;			// This line is the same as the previous calculated line. however, substract 1 and add menu_size to decrease the index. 
+				std::cout << index_selected << std::endl;
+			}
+
 			if (event.key.key == SDLK_RETURN) {											// If the key pressed is "Enter"
-				is_game_started = true;													// Init game | Start Game
+				if (index_selected == 0) {
+					is_game_started = true;												// Init game | Start Game
+				}
+				if (index_selected == 1) {												// If the index_select is 1 enter the menu of options
+					std::cout << "OPTIONS PRESSED" << std::endl;
+				}
+				if (index_selected == 2) {												// Here, if the index_select if 2 EXIT GAME
+					std::cout << "EXIT!" << std::endl;
+					SDL_Quit();
+					exit(0);
+				}
 			}
 		}
 		
+
 		if (event.window.type == SDL_EVENT_WINDOW_RESIZED) {							// Check if the window resize event is triggered. If so, resize the start-scene
 			
 			std::cout << "Window Resize" << std::endl;									// Confirm the window resizing event
@@ -68,11 +92,17 @@ void StartScene::TextMenu(SDL_Renderer* renderer) {
 		400.0f,
 		100.0f };
 
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////// HERE, WE IMPLEMENT ALL THE SETTINGS TO THE SECOND TEXT /////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	SDL_Color color_menu_text = { 0,86,178,0 };											// Here, I have implemented SDL_Color to change the color in text render
+	SDL_Color color_default_text = { 0,86,178,0 };										// Here, I have implemented SDL_Color to change the color in text render || Color default text
+	SDL_Color color_select_text = {104, 97, 172, 0};									// If the option is selection || Color selected
 
-	SDL_Texture* texture_menu = font.TextTexture(renderer, "START GAME!", color_menu_text); // We call TextTexture to assign new text and color, using the renderer
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	SDL_Texture* texture_menu = font.TextTexture(renderer, "START GAME!",				// We call TextTexture to assign new text and color, using the renderer
+		index_selected == 0 ? color_select_text : color_default_text);					
 
 	SDL_FRect rect_menu = {																// Here, I use the SDL_FRect to set the position and size of the text
 		((width - 200.0f) / 2) + 90.0f,													
@@ -83,7 +113,8 @@ void StartScene::TextMenu(SDL_Renderer* renderer) {
 
 	////////////////// HERE, WE IMPLEMENT ALL THE SETTINGS TO THE THRID TEXT ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-	SDL_Texture* texture_menu_options = font.TextTexture(renderer, "OPTIONS", color_menu_text);
+	SDL_Texture* texture_menu_options = font.TextTexture(renderer, "OPTIONS", 
+		index_selected == 1 ? color_select_text : color_default_text);
 
 	SDL_FRect rect_menu_options = {
 		((width - 100.0f) / 2) + 135.0f,
@@ -94,9 +125,9 @@ void StartScene::TextMenu(SDL_Renderer* renderer) {
 
 	////////////////// HERE, WE IMPLEMENT ALL THE SETTINGS TO THE FOURTH TEXT ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-	SDL_Color color_exit_text = {104, 97, 172, 0};
 
-	SDL_Texture* texture_menu_exit = font.TextTexture(renderer, "EXIT", color_exit_text);
+	SDL_Texture* texture_menu_exit = font.TextTexture(renderer, "EXIT", 
+		index_selected == 2 ? color_select_text : color_default_text);
 
 	SDL_FRect rect_menu_exit = {
 		((width - 50.0f) / 2) + 160.0f,

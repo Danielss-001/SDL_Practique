@@ -12,8 +12,10 @@ private:
 	FontConfig		 font;
 	Camera&			 camera;
 	SDL_FRect		 start_screen;						
-	bool		     is_game_started = false;						// Initialized bool to false, until the "enter" key event triggers it
+	bool		     is_game_started  = false;						// Initialized bool to false, until the "enter" key event triggers it
 	bool			 is_resize_window = false;						
+	int				 index_selected   = 0;							// integer index to manage the menu
+	const int        menu_size		  = 3;							
 
 public:
 
